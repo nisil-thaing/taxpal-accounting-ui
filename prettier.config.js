@@ -15,10 +15,10 @@ export default {
 
     '^@/types(.*)$',
     '^@/constants(.*)$',
+    '^@/lib(.*)$',
     '^@/services(.*)$',
     '^@/utils(.*)$',
     '^@/store(.*)$',
-    '^@/lib(.*)$',
     '^@/components(.*)$',
     '^@/pages(.*)$',
 
