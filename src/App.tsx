@@ -1,8 +1,14 @@
 import type { FC } from 'react';
 import { RouterProvider } from 'react-router';
 
-import { routerConfigs } from './pages';
+import { QueryClientProvider } from '@tanstack/react-query';
 
-import './App.css';
+import { queryClient } from '@/lib/react-query';
 
-export const App: FC = () => <RouterProvider router={routerConfigs} />;
+import { routerConfigs } from '@/pages';
+
+export const App: FC = () => (
+  <QueryClientProvider client={queryClient}>
+    <RouterProvider router={routerConfigs} />
+  </QueryClientProvider>
+);

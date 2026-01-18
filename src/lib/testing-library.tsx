@@ -1,7 +1,7 @@
 import type { ComponentType, ReactNode } from 'react';
 import { MemoryRouter } from 'react-router';
 
-// import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { RenderOptions, RenderResult } from '@testing-library/react';
 import { render } from '@testing-library/react';
 
@@ -23,7 +23,7 @@ export const renderTestWithRoutersWrapper = (ui: ReactNode, options?: RenderOpti
   return renderWithWrappers(ui, [RouterWrapper], options);
 };
 
-/*const createTestQueryClient = () =>
+const createTestQueryClient = () =>
   new QueryClient({
     defaultOptions: {
       queries: {
@@ -45,4 +45,4 @@ export const renderTestWithQueryClientWrapper = (ui: ReactNode, options?: Render
 
 export const renderTestWithAllProviders = (ui: ReactNode, options?: RenderOptions): RenderResult => {
   return renderWithWrappers(ui, [QueryClientWrapper, RouterWrapper], options);
-};*/
+};
