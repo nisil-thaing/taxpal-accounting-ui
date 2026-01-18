@@ -26,3 +26,10 @@ dist-ssr
 # code coverage
 coverage
 *.lcov
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
