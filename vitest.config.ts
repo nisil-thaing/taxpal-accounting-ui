@@ -1,6 +1,6 @@
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import { defineConfig } from 'vitest/config';
+import { configDefaults, defineConfig } from 'vitest/config';
 
 // https://vitest.dev/config/
 export default defineConfig({
@@ -18,5 +18,6 @@ export default defineConfig({
       provider: 'v8',
       include: ['src/**/*.{ts,tsx}'],
     },
+    exclude: [...configDefaults.exclude, '**/e2e/**'],
   },
 });
