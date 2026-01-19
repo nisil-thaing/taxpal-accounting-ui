@@ -1,84 +1,53 @@
-import usersData from '@/mocks/users.json';
+import type { AxiosResponse } from 'axios';
 
-export interface User {
-  id: string;
-  email: string;
-  name: string;
-  role: string;
-}
+import type { AuthUser } from '@/types/auth';
 
-export interface LoginRequest {
+import axiosInstance from '@/lib/axios';
+
+export type LoginPayload = {
   email: string;
   password: string;
-}
+};
 
-export interface LoginResponse {
-  user: User;
-  token: string;
-}
-
-export interface SignUpRequest {
-  firstName: string;
-  lastName: string;
+export type SignupPayload = {
   email: string;
   password: string;
-}
+  firstName?: string;
+  lastName?: string;
+};
 
-export interface SignUpResponse {
-  user: User;
-  token: string;
-}
+export type CredentialsData = {
+  message: string;
+  user: AuthUser;
+};
 
-const SIMULATED_DELAY = 1000;
+export type LogoutData = {
+  message: string;
+};
+
+export type ProfileData = {
+  user: AuthUser;
+};
+
+export type LoginResponse = AxiosResponse<CredentialsData>;
+export type SignupResponse = AxiosResponse<CredentialsData>;
+export type LogoutResponse = AxiosResponse<LogoutData>;
+export type ProfileResponse = AxiosResponse<ProfileData>;
 
 export const authService = {
-  login: (credentials: LoginRequest): Promise<LoginResponse> => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const user = usersData.users.find(u => u.email === credentials.email && u.password === credentials.password);
-
-        if (user) {
-          const { password: _, ...userWithoutPassword } = user;
-          resolve({
-            user: userWithoutPassword,
-            token: `mock-jwt-token-${user.id}-${Date.now()}`,
-          });
-        } else {
-          reject(new Error('Invalid email or password'));
-        }
-      }, SIMULATED_DELAY);
-    });
+  login: (payload: LoginPayload): Promise<LoginResponse> => {
+    return axiosInstance.post('/auth/login', payload);
   },
 
-  logout: (): Promise<void> => {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve();
-      }, SIMULATED_DELAY / 2);
-    });
+  signup: (payload: SignupPayload): Promise<SignupResponse> => {
+    return axiosInstance.post('/auth/signup', payload);
   },
 
-  signUp: (data: SignUpRequest): Promise<SignUpResponse> => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const existingUser = usersData.users.find(u => u.email === data.email);
+  logout: (): Promise<LogoutResponse> => {
+    return axiosInstance.post('/auth/logout');
+  },
 
-        if (existingUser) {
-          reject(new Error('An account with this email already exists'));
-        } else {
-          const newUser: User = {
-            id: `${usersData.users.length + 1}`,
-            email: data.email,
-            name: `${data.firstName} ${data.lastName}`,
-            role: 'user',
-          };
-
-          resolve({
-            user: newUser,
-            token: `mock-jwt-token-${newUser.id}-${Date.now()}`,
-          });
-        }
-      }, SIMULATED_DELAY);
-    });
+  getProfile: (): Promise<ProfileResponse> => {
+    return axiosInstance.get('/auth/profile');
   },
 };

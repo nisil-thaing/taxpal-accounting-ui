@@ -309,5 +309,6 @@ Key ESLint rules enforced:
 - Prefix unused variables with `_`
 - No console.log (use console.warn or console.error)
 - TypeScript strict mode enabled
+- **No comments in code** - Code should be self-documenting through clear naming
 
 Pre-commit hooks automatically run ESLint and Prettier to ensure code quality.
