@@ -173,9 +173,15 @@ export const useLogin = () => {
 
 # Services
 
-Place API services in `src/services/`. Define request/response types alongside service methods:
+Place API services in `src/services/`. Define request/response types alongside service methods.
+
+## API Requests
+
+**Always use the pre-configured axios instance** from `@/lib/axios` for all API calls:
 
 ```tsx
+import axiosInstance from '@/lib/axios';
+
 export interface LoginRequest {
   email: string;
   password: string;
@@ -187,15 +193,27 @@ export interface LoginResponse {
 }
 
 export const authService = {
-  login: (credentials: LoginRequest): Promise<LoginResponse> => {
-    // API call implementation
-    return fetch('/api/auth/login', {
-      method: 'POST',
-      body: JSON.stringify(credentials),
-    }).then(res => res.json());
+  login: async (credentials: LoginRequest): Promise<LoginResponse> => {
+    const response = await axiosInstance.post<LoginResponse>('/auth/login', credentials);
+    return response.data;
+  },
+
+  getProfile: async (): Promise<User> => {
+    const response = await axiosInstance.get<User>('/auth/profile');
+    return response.data;
   },
 };
 ```
+
+The axios instance provides:
+
+- **Base URL**: Configured via `VITE_API_BASE_URL` env variable (defaults to `/api`)
+- **Timeout**: 10 seconds
+- **Headers**: `Content-Type: application/json` by default
+- **Credentials**: Cookies sent automatically (`withCredentials: true`)
+- **401 handling**: Auto-redirects to `/login` on unauthorized responses
+
+**Do NOT use raw `fetch()` or create new axios instances** - always import from `@/lib/axios`.
 
 # Styling
 

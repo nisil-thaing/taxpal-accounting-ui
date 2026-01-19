@@ -17,8 +17,29 @@ This is a React + TypeScript web application for TaxPal Accounting using Vite wi
 - **Routing**: React Router v7
 - **Forms**: React Hook Form + Zod validation
 - **Testing**: Vitest + Testing Library (unit), Playwright (E2E)
-- **Package Manager**: Bun
+- **Package Manager**: Bun (NEVER use npm, yarn, or pnpm)
 - **Code Quality**: ESLint, Prettier, Husky, lint-staged
+
+## Package Management
+
+**IMPORTANT**: This project uses **Bun exclusively** for package management. NEVER use npm, yarn, or pnpm.
+
+```bash
+# Install dependencies
+bun install
+
+# Add a package
+bun add <package-name>
+
+# Add a dev dependency
+bun add -d <package-name>
+
+# Remove a package
+bun remove <package-name>
+
+# Update packages
+bun update
+```
 
 ## Project Structure
 
@@ -102,10 +123,21 @@ bun run format           # Run Prettier
 | UI primitives (shadcn) | `src/components/ui/`               |
 | Form components        | `src/components/Form/`             |
 
-## Task Planning
+## AI Agent Guidelines
+
+### Package Management Rules
+
+- **ALWAYS use Bun** for all package management operations
+- **NEVER use npm, yarn, or pnpm** commands
+- When installing packages, use: `bun add <package>`
+- When installing dev dependencies, use: `bun add -d <package>`
+- When running scripts, use: `bun run <script>` or `bun <script>`
+
+### Task Planning
 
 When working on tasks, follow this approach:
 
 1. **Plan first** - Create a todo list to track steps before starting implementation
 2. **Execute directly** - No need for excessive confirmation, proceed with the plan
 3. **Ask only when necessary** - Only ask questions for genuine ambiguity
+4. **Use Bun exclusively** - Never use npm, yarn, or pnpm for any operations
